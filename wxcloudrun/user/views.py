@@ -16,8 +16,8 @@ def code2session():
         'secret': config.secret,
         'js_code': js_code,
     }).json()
-    if resp['errcode'] == 0:
-        update_user_last_login_time(resp['openid'])
-        return make_succ_response(resp)
-    else:
+    if resp.get('errcode', 0) != 0:
         return make_err_response(resp['errmsg'])
+    update_user_last_login_time(resp['openid'])
+    return make_succ_response(resp)
+        
