@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declarative_base
 import pymysql
 import config
 
@@ -19,6 +20,11 @@ db = SQLAlchemy(app)
 
 # 加载控制器
 from wxcloudrun import views
+
+Base = declarative_base()
+
+# 自动创建所有未创建的表结构
+Base.metadata.create_all(db.engine)
 
 # 加载配置
 app.config.from_object('config')
