@@ -1,6 +1,7 @@
 import config
 import requests
 from flask import blueprints, request
+from wxcloudrun.user.dao import update_user_last_login_time
 from wxcloudrun.response import make_succ_response, make_err_response
 
 user_api = blueprints.Blueprint('user_api', __name__)
@@ -15,7 +16,8 @@ def code2session():
         'secret': config.secret,
         'js_code': js_code,
     }).json()
-    if resp['code'] == 0:
-        return make_succ_response(resp['data'])
+    if resp['errcode'] == 0:
+        update_user_last_login_time(resp['openid'])
+        return make_succ_response(resp)
     else:
-        return make_err_response(resp['data']['errmsg'])
+        return make_err_response(resp['errmsg'])
