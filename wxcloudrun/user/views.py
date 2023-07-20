@@ -9,6 +9,7 @@ user_api = blueprints.Blueprint('user_api', __name__)
 @user_api.route('/code2session', methods=['GET'])
 def code2session():
     js_code = request.args.get('code')
+    print(config.appid, config.secret, js_code)
     resp = requests.get('https://api.weixin.qq.com/sns/jscode2session', params={
         'grant_type': 'authorization_code',
         'appid': config.appid,
