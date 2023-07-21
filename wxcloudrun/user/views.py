@@ -21,3 +21,7 @@ def code2session():
     update_user_last_login_time(resp['openid'])
     return make_succ_response(resp)
         
+@user_api.route('/error', methods=['GET'])
+def error_test():
+    return make_err_response('test')
+        

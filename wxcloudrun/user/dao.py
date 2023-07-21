@@ -1,8 +1,6 @@
 import logging
-import datetime
-
+from datetime import datetime
 from sqlalchemy.exc import OperationalError
-
 from wxcloudrun import db
 from wxcloudrun.user.model import User
 
@@ -19,7 +17,7 @@ def update_user_last_login_time(openid):
             new_user = User(openid=openid)
             db.session.add(new_user)
         db.session.commit()
-        return 
+        return
     except OperationalError as e:
         logger.info("update_user_last_login_time errorMsg= {} ".format(e))
         return None
